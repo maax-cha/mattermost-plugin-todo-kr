@@ -85,9 +85,9 @@ func (p *Plugin) OnActivate() error {
 
 	botID, err := p.client.Bot.EnsureBot(&model.Bot{
 		Username:    "todo",
-		DisplayName: "Todo Bot",
-		Description: "Created by the Todo plugin.",
-	})
+		DisplayName: "Todo 알리미",
+		// Description: "Todo를 알려드립니다.",
+	}, pluginapi.ProfileImagePath("/assets/bot_icon.png"))
 	if err != nil {
 		return errors.Wrap(err, "failed to ensure todo bot")
 	}
@@ -218,7 +218,7 @@ func (p *Plugin) handleAdd(w http.ResponseWriter, r *http.Request) {
 
 		p.sendRefreshEvent(userID, []string{MyListKey})
 
-		replyMessage := fmt.Sprintf("@%s attached a todo to this thread", senderName)
+		replyMessage := fmt.Sprintf("@%s 가 이 메시지에 todo를 등록하였습니다.", senderName)
 		p.postReplyIfNeeded(addRequest.PostID, replyMessage, addRequest.Message)
 
 		return
@@ -243,7 +243,7 @@ func (p *Plugin) handleAdd(w http.ResponseWriter, r *http.Request) {
 
 		p.sendRefreshEvent(userID, []string{MyListKey})
 
-		replyMessage := fmt.Sprintf("@%s attached a todo to this thread", senderName)
+		replyMessage := fmt.Sprintf("@%s 가 이 메시지에 todo를 등록하였습니다.", senderName)
 		p.postReplyIfNeeded(addRequest.PostID, replyMessage, addRequest.Message)
 		return
 	}
@@ -271,7 +271,7 @@ func (p *Plugin) handleAdd(w http.ResponseWriter, r *http.Request) {
 	p.sendRefreshEvent(userID, []string{OutListKey})
 	p.sendRefreshEvent(receiver.Id, []string{InListKey})
 
-	receiverMessage := fmt.Sprintf("You have received a new Todo from @%s", senderName)
+	receiverMessage := fmt.Sprintf("@%s 가 Todo를 보냈습니다.", senderName)
 	p.PostBotCustomDM(receiver.Id, receiverMessage, addRequest.Message, issueID)
 
 	replyMessage := fmt.Sprintf("@%s sent @%s a todo attached to this thread", senderName, addRequest.SendTo)
@@ -381,7 +381,7 @@ func (p *Plugin) handleEdit(w http.ResponseWriter, r *http.Request) {
 		p.sendRefreshEvent(foreignUserID, lists)
 
 		userName := p.listManager.GetUserName(userID)
-		message := fmt.Sprintf("@%s modified a Todo from:\n%s\nTo:\n%s", userName, oldMessage, editRequest.Message)
+		message := fmt.Sprintf("@%s 가 당신이 보낸 Todo를 아래와 같이 수정했습니다.\n[원본]%s\n[변경]\n%s", userName, oldMessage, editRequest.Message)
 		p.PostBotDM(foreignUserID, message)
 	}
 }
@@ -422,7 +422,7 @@ func (p *Plugin) handleChangeAssignment(w http.ResponseWriter, r *http.Request) 
 	userName := p.listManager.GetUserName(userID)
 	if receiver.Id != userID {
 		p.sendRefreshEvent(receiver.Id, []string{InListKey})
-		receiverMessage := fmt.Sprintf("You have received a new Todo from @%s", userName)
+		receiverMessage := fmt.Sprintf("@%s 가 Todo를 보냈습니다.", userName)
 		p.PostBotCustomDM(receiver.Id, receiverMessage, issueMessage, changeRequest.ID)
 	}
 	if oldOwner != "" {
@@ -460,7 +460,7 @@ func (p *Plugin) handleAccept(w http.ResponseWriter, r *http.Request) {
 	p.sendRefreshEvent(sender, []string{OutListKey})
 
 	userName := p.listManager.GetUserName(userID)
-	message := fmt.Sprintf("@%s accepted a Todo you sent: %s", userName, todoMessage)
+	message := fmt.Sprintf("@%s 가 당신이 보낸 Todo를 수락하였습니다: %s", userName, todoMessage)
 	p.PostBotDM(sender, message)
 }
 
@@ -491,7 +491,7 @@ func (p *Plugin) handleComplete(w http.ResponseWriter, r *http.Request) {
 	p.trackCompleteIssue(userID)
 
 	userName := p.listManager.GetUserName(userID)
-	replyMessage := fmt.Sprintf("@%s completed a todo attached to this thread", userName)
+	replyMessage := fmt.Sprintf("@%s 가 이 메시지의 todo를 완료하였습니다.", userName)
 	p.postReplyIfNeeded(issue.PostID, replyMessage, issue.Message)
 
 	if foreignID == "" {
@@ -500,7 +500,7 @@ func (p *Plugin) handleComplete(w http.ResponseWriter, r *http.Request) {
 
 	p.sendRefreshEvent(foreignID, []string{OutListKey})
 
-	message := fmt.Sprintf("@%s completed a Todo you sent: %s", userName, issue.Message)
+	message := fmt.Sprintf("@%s 가 당신이 보낸 Todo를 완료하였습니다: %s", userName, issue.Message)
 	p.PostBotDM(foreignID, message)
 }
 
@@ -539,9 +539,9 @@ func (p *Plugin) handleRemove(w http.ResponseWriter, r *http.Request) {
 
 	list := InListKey
 
-	message := fmt.Sprintf("@%s removed a Todo you received: %s", userName, issue.Message)
+	message := fmt.Sprintf("@%s 가 당신이 보낸 Todo를 삭제하였습니다: %s", userName, issue.Message)
 	if isSender {
-		message = fmt.Sprintf("@%s declined a Todo you sent: %s", userName, issue.Message)
+		message = fmt.Sprintf("@%s 가 당신이 보낸 Todo를 거절하였습니다: %s", userName, issue.Message)
 		list = OutListKey
 	}
 
