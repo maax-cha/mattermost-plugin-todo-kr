@@ -168,7 +168,7 @@ function TodoItem(props) {
                             <div>
                                 <TextareaAutosize
                                     style={style.textareaResizeMessage}
-                                    placeholder='Enter a title'
+                                    placeholder='제목 입력'
                                     value={message}
                                     autoFocus={true}
                                     onKeyDown={(e) => onKeyDown(e)}
@@ -176,7 +176,7 @@ function TodoItem(props) {
                                 />
                                 <TextareaAutosize
                                     style={style.textareaResizeDescription}
-                                    placeholder='Enter a description'
+                                    placeholder='메모 입력'
                                     value={description}
                                     onKeyDown={(e) => onKeyDown(e)}
                                     onChange={(e) => setDescription(e.target.value)}
@@ -223,19 +223,19 @@ function TodoItem(props) {
                             )}
                             {canBump(list, issue.list) && (
                                 <MenuItem
-                                    text='Bump'
+                                    text='알림 다시 보내기'
                                     icon='bell-outline'
                                     action={() => bump(issue.id)}
                                 />
                             )}
                             <MenuItem
-                                text='Edit todo'
+                                text='Todo 수정'
                                 icon='pencil-outline'
                                 action={() => setEditTodo(true)}
                                 shortcut='e'
                             />
                             <MenuItem
-                                text='Assign to…'
+                                text='…에게 보내기'
                                 icon='account-plus-outline'
                                 action={editAssignee}
                                 shortcut='a'
@@ -243,7 +243,7 @@ function TodoItem(props) {
                             {canRemove(list, issue.list) && (
                                 <MenuItem
                                     action={removeTodo}
-                                    text='Delete todo'
+                                    text='Todo 삭제'
                                     icon='trash-can-outline'
                                     shortcut='d'
                                 />
@@ -263,14 +263,14 @@ function TodoItem(props) {
                         size='small'
                         onClick={() => setEditTodo(false)}
                     >
-                        {'Cancel'}
+                        {'취소'}
                     </Button>
                     <Button
                         emphasis='primary'
                         size='small'
                         onClick={saveEditedTodo}
                     >
-                        {'Save'}
+                        {'저장'}
                     </Button>
                 </div>
             )}

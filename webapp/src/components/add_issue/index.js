@@ -11,7 +11,7 @@ function mapStateToProps(state) {
 
     let permalink = '';
     if (postID) {
-        permalink = `\n[Permalink](${getCurrentTeamRoute(state)}pl/${postID})`;
+        permalink = `\n[메시지 바로가기](${getCurrentTeamRoute(state)}pl/${postID})`;
     }
 
     const message = getMessage(state) + permalink;

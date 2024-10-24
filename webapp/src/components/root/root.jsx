@@ -146,10 +146,10 @@ export default class Root extends React.Component {
                                 checked={this.state.attachToThread}
                                 onChange={this.handleAttachChange}
                             />
-                            <b>{' Add to thread'}</b>
+                            <b>{' 글타래에 진행 상황 알려주기'}</b>
                             <div className='help-text'>
                                 {
-                                    ' Select to have the Todo Bot respond to the thread when the attached todo is added, modified or completed.'
+                                    'Todo Bot이 진행상황(생성, 완료)을 글타래에 공유합니다.'
                                 }
                             </div>
                         </div>
@@ -178,7 +178,7 @@ export default class Root extends React.Component {
                             onClick={this.submit}
                             disabled={!message}
                         >
-                            {'Add Todo'}
+                            {'Todo 추가'}
                         </button>
                     </div>
                     <div className='todoplugin-divider'/>

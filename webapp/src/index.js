@@ -29,7 +29,7 @@ export default class Plugin {
         registry.registerBottomTeamSidebarComponent(TeamSidebar);
 
         registry.registerPostDropdownMenuAction(
-            'Add Todo',
+            'Todo에 추가',
             (postID) => {
                 telemetry('post_action_click');
                 store.dispatch(openAddCard(postID));

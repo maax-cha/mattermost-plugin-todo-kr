@@ -32,7 +32,7 @@ export default class Menu extends React.PureComponent<Props> {
                     <div className='menu-options hideOnWidescreen'>
                         <Menu.Text
                             id='menu-cancel'
-                            name={'Cancel'}
+                            name={'취소'}
                             className='menu-cancel'
                             onClick={this.onCancel}
                         />

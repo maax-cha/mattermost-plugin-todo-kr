@@ -8,7 +8,7 @@ import Root from './root';
 
 const mapStateToProps = (state) => ({
     visible: isRootModalVisible(state),
-    message: getMessage(state) + (getPostID(state) ? '\n[Permalink](' + getCurrentTeamRoute(state) + 'pl/' + getPostID(state) + ')' : ''),
+    message: getMessage(state) + (getPostID(state) ? '\n[메시지 바로가기](' + getCurrentTeamRoute(state) + 'pl/' + getPostID(state) + ')' : ''),
     postID: getPostID(state),
 });
 

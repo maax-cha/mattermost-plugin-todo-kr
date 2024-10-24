@@ -199,7 +199,7 @@ func (p *Plugin) runSendCommand(args []string, extra *model.CommandArgs) (bool, 
 
 	senderName := p.listManager.GetUserName(extra.UserId)
 
-	receiverMessage := fmt.Sprintf("You have received a new Todo from @%s", senderName)
+	receiverMessage := fmt.Sprintf("@%s 가 Todo를 보냈습니다.", senderName)
 
 	p.PostBotCustomDM(receiver.Id, receiverMessage, message, receiverIssueID)
 	p.postCommandResponse(extra, responseMessage)
